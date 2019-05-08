@@ -71,6 +71,31 @@ Humanoid.prototype.greet = function () {
   * Instances of CharacterStats should have all of the same properties as GameObject.
 */
 
+function Villain(villainAttributes) {
+  Humanoid.call(this, villainAttributes);
+  this.weapons = villainAttributes.weapons;
+  this.healthPoints = villainAttributes.healthPoints;
+}
+
+Villain.prototype = Object.create(Humanoid.prototype);
+Villain.prototype.action = function () {
+  console.log(`${this.name} says: with my ${this.weapons} I will take ${hero.healthPoints - 20} HP away from you`);
+}
+
+function Hero(heroAttributes) {
+  Humanoid.call(this, heroAttributes);
+  this.weapons = heroAttributes.weapons;
+  this.healthPoints = heroAttributes.healthPoints;
+}
+
+Hero.prototype = Object.create(Humanoid.prototype);
+Hero.prototype.action = function () {
+  if (hero.healthPoints === 0) {
+    console.log(destroy());
+  }
+  console.log(`${this.name} says: with my ${this.weapons} I will take ${evil.healthPoints - 5} HP away from you`)
+}
+
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
 
@@ -124,6 +149,20 @@ Humanoid.prototype.greet = function () {
     language: 'Elvish',
   });
 
+  const evil = new Villain({
+    name: 'Zurg',
+    healthPoints: 20,
+    weapons: 'Blaster',
+    language: 'Elvish',
+  })
+
+  const hero = new Hero({
+    name: 'Buzz',
+    healthPoints: 25,
+    weapons: 'Laser',
+    language: 'Elvish'
+  })
+
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
   console.log(swordsman.healthPoints); // 15
@@ -134,7 +173,8 @@ Humanoid.prototype.greet = function () {
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-
+  console.log(evil.action());
+  console.log(hero.action())
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
